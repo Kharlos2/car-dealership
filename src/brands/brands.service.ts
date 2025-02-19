@@ -36,20 +36,20 @@ export class BrandsService {
   }
 
   findOne(id: string) {
-    const brand = this.brands.find( brand => brand.id === id );
-    if(!brand) 
+    const brand = this.brands.find(brand => brand.id === id);
+    if (!brand)
       throw new NotFoundException(`Brand with id "${id}" not found`)
 
     return brand;
   }
 
   update(id: string, updateBrandDto: UpdateBrandDto) {
-    
-    let brandDB = this.findOne( id );
 
-    this.brands = this.brands.map( brand => {
+    let brandDB = this.findOne(id);
 
-      if(brand.id === id){
+    this.brands = this.brands.map(brand => {
+
+      if (brand.id === id) {
         brandDB.updatedAt = new Date().getTime()
         brandDB = {
           ...brandDB,
@@ -61,13 +61,17 @@ export class BrandsService {
 
       return brand;
 
-    } )
+    })
 
     return brandDB
   }
 
   remove(id: string) {
-    this.findOne( id );
-    this.brands = this.brands.filter( brand => brand.id !== id );
+    this.findOne(id);
+    this.brands = this.brands.filter(brand => brand.id !== id);
+  }
+
+  fillBrandsWithSeedData(brands: Brand[]) {
+    this.brands = brands;
   }
 }
